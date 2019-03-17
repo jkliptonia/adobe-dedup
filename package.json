@@ -1,0 +1,16 @@
+{
+  "name": "adobe-dedup",
+  "version": "1.0.0",
+  "description": "Does some things",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jen Lipton",
+  "license": "MIT",
+  "dependencies": {
+    "xhr2": "^0.1.4",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
