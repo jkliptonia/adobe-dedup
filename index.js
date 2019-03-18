@@ -1,10 +1,13 @@
 
 const { leads } = require('./leads.json');
 
-const sortByNewest = (a, b) => new Date(a.entryDate) - new Date(b.entryDate);
-// can't use if need to check original list position on rare exceptions
+//TODO: add log
+//TODO: update README
+//TODO: stretch goal, implement command line functionality
 
-const filtered = leads.filter( (el, i, a) => {
+function removeDuplicates(array) {
+    
+    return array.filter( (el, i, a) => {
 
     //eliminate current element from array to all .some() checks
     let copy = a.slice();
@@ -29,20 +32,16 @@ const filtered = leads.filter( (el, i, a) => {
 
     //TODO: if el is not desired, we will repeat this test on duplicate.
 
-});
+    });
+};
 
 function compareDups(a, b, array) {
-    
-    const largestIndex = (a, b, array) => array.indexOf(a) > array.indexOf(b) ? a : b;
-    const haveEqualDates = (a, b) => new Date(a.entryDate).getTime() == new Date(b.entryDate).getTime();
-    const firstDateIsLater = (a, b) => (new Date(a.entryDate) > new Date(b.entryDate));
-
     switch(true) {
         case (!a):
             return b;
         case (!b):
             return a;
-        case haveEqualDates(a,b):
+        case datesAreEqual(a,b):
             return largestIndex(a, b, array);
         case firstDateIsLater(a, b):
             return a;
@@ -53,4 +52,10 @@ function compareDups(a, b, array) {
     }
 }
 
-console.log(leads);
+const largestIndex = (a, b, array) => array.indexOf(a) > array.indexOf(b) ? a : b;
+const datesAreEqual = (a, b) => new Date(a.entryDate).getTime() == new Date(b.entryDate).getTime();
+const firstDateIsLater = (a, b) => (new Date(a.entryDate) > new Date(b.entryDate));
+
+export { removeDuplicates, compareDups, largestIndex, datesAreEqual, firstDateIsLater };
+
+//console.log( removeDuplicates(leads) );
