@@ -2,15 +2,18 @@
   "name": "adobe-dedup",
   "version": "1.0.0",
   "description": "Does some things",
+  "repository": "github:jkliptonia/adobe-dedup",
+  "bugs": "https://github.com/jkliptonia/adobe-dedup/issues",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jen Lipton",
+  "author": {
+    "name": "Jen Lipton",
+    "url": "https://jklipton.io"
+  },
   "license": "MIT",
-  "dependencies": {
-    "xhr2": "^0.1.4",
-    "xmlhttprequest": "^1.8.0"
-  }
+  "dependencies": {}
 }

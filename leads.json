@@ -78,5 +78,14 @@
 "lastName": "Smith",
 "address": "888 Mayberry St",
 "entryDate": "2014-05-07T17:33:20+00:00"
-}]
+},
+{
+"_id": "4938dfas512hd94304",
+"email": "friend@unique.com",
+"firstName":  "Unique",
+"lastName": "Friend",
+"address": "123 Milk St",
+"entryDate": "2015-05-07T17:33:20+00:00"
+}
+]
 }
