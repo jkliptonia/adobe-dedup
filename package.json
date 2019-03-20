@@ -1,16 +1,17 @@
 {
-  "name": "adobe-dedup",
+  "name": "de-duplicator",
   "version": "1.0.0",
   "description": "Does some things",
-  "repository": "github:jkliptonia/adobe-dedup",
-  "bugs": "https://github.com/jkliptonia/adobe-dedup/issues",
+  "repository": "github:jkliptonia/de-duplicator",
+  "bugs": "https://github.com/jkliptonia/de-duplicator/issues",
   "private": true,
-  "main": "index.js",
+  "main": "de-duplicator/index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --require babel-register de-duplicator/index.js",
     "test": "npm run test-functions & npm run test-script",
-    "test-functions": "mocha --require babel-register test/functions.js",
-    "test-script": "mocha --require babel-register test/script.js"
+    "test-functions": "mocha --require babel-register de-duplicator/test/functions.js",
+    "test-script": "mocha --require babel-register de-duplicator/test/script.js",
+    "debug": "node --inspect --require babel-register de-duplicator/index.js"
   },
   "author": {
     "name": "Jen Lipton",
@@ -23,6 +24,7 @@
     "babel-plugin-add-module-exports": "^1.0.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
     "mocha": "^6.0.2"
   }
 }
