@@ -1,20 +1,22 @@
 
 //TODO: add log
-//TODO: test findUnique
 //TODO: update README
+//TODO: add O(n) record
 //TODO: stretch goal, implement command line functionality
 
 function deduplicate(array) {
 
     let uniqueEmails = findUnique('email', array);
-    let uniqueIds = findUnique('_id', Object.values(uniqueEmails));
+    let uniqueIds = findUnique('_id', uniqueEmails);
 
-    const deduplicated = Object.values(uniqueIds);
+    const deduplicated = uniqueIds;
     console.log('WHY AM I WEIRD', deduplicated);
     return deduplicated;
+
 }
 
 function compareDups(a, b, array) {
+
     switch(true) {
         case datesAreEqual(a,b):
             return largestIndex(a, b, array);
@@ -25,21 +27,26 @@ function compareDups(a, b, array) {
         default:
             throw new Error("Unable to succesfully compare duplicates");
     }
+
 }
 
 function findUnique(key, array) {
+
     let result = {};
 
-    //TODO: can refactor to reduce
-    for (let i in array) {
-        const el = array[i];
-        const targetField = el[key]
-        const existing = result[targetField];
+    array.reduce( (acc, curr, _, arr) => {
 
-        result[targetField] = existing ? compareDups(existing, el, array) : el;
-    }
+        const keyField = curr[key];
+        const existing = acc[keyField];
 
-    return result;
+        acc[keyField] = existing ? compareDups(existing, curr, arr) : curr;
+
+        return acc;
+
+    }, result)
+
+    return Object.values(result);
+
 }
 
 const largestIndex = (a, b, array) => array.indexOf(a) > array.indexOf(b) ? a : b;
