@@ -7,11 +7,10 @@
   "private": true,
   "main": "de-duplicator/index.js",
   "scripts": {
-    "start": "node --require babel-register de-duplicator/index.js",
+    "start": "node --require babel-register index.js",
     "test": "npm run test-functions & npm run test-script",
     "test-functions": "mocha --require babel-register de-duplicator/test/functions.js",
-    "test-script": "mocha --require babel-register de-duplicator/test/script.js",
-    "debug": "node --inspect --require babel-register de-duplicator/index.js"
+    "test-script": "mocha --require babel-register de-duplicator/test/script.js"
   },
   "author": {
     "name": "Jen Lipton",

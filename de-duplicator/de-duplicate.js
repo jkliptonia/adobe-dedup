@@ -1,4 +1,4 @@
-import { logger } from "./logger";
+import { logger, logChange } from "./logger";
 
 //TODO: update README
 //TODO: add O(n) record
@@ -6,12 +6,12 @@ import { logger } from "./logger";
 
 function deduplicate(array) {
 
-    const changeFile = `changes changes`;
+    let { unique: uniqueEmails, changeFile: changedEmails } = findUnique('email', array);
+    let { unique: uniqueIds, changeFile: changedIds } = findUnique('_id', uniqueEmails);
 
-    let uniqueEmails = findUnique('email', array);
-    let uniqueIds = findUnique('_id', uniqueEmails);
-
+    const changeFile = [ ...changedEmails, ...changedIds ];
     const deduplicated = uniqueIds;
+
     logger(array, changeFile, deduplicated);
     return deduplicated;
 }
@@ -36,19 +36,29 @@ function compareDups(a, b, array) {
 function findUnique(key, array) {
 
     let result = {};
+    let changeFile = []
 
     array.reduce( (acc, curr, _, arr) => {
 
+        let uniqueData;
         const keyField = curr[key];
         const existing = acc[keyField];
 
-        acc[keyField] = existing ? compareDups(existing, curr, arr) : curr;
+        if (existing){
+            uniqueData = compareDups(existing, curr, arr);
+            logChange(changeFile, existing, uniqueData)
+        } else {
+            uniqueData = curr;
+        }
+
+        acc[keyField] = uniqueData;
+        logChange(changeFile, curr, uniqueData);
 
         return acc;
 
     }, result)
 
-    return Object.values(result);
+    return { unique: Object.values(result), changeFile }
 }
 
 const largestIndex = (a, b, array) => array.indexOf(a) > array.indexOf(b) ? a : b;
