@@ -1,21 +1,25 @@
+import { logger } from "./logger";
 
-//TODO: add log
 //TODO: update README
 //TODO: add O(n) record
 //TODO: stretch goal, implement command line functionality
 
 function deduplicate(array) {
 
+    const changeFile = `changes changes`;
+
     let uniqueEmails = findUnique('email', array);
     let uniqueIds = findUnique('_id', uniqueEmails);
 
     const deduplicated = uniqueIds;
-    console.log('WHY AM I WEIRD', deduplicated);
+    logger(array, changeFile, deduplicated);
     return deduplicated;
-
 }
 
 function compareDups(a, b, array) {
+
+    //a is current
+    //b is proposed change
 
     switch(true) {
         case datesAreEqual(a,b):
@@ -27,7 +31,6 @@ function compareDups(a, b, array) {
         default:
             throw new Error("Unable to succesfully compare duplicates");
     }
-
 }
 
 function findUnique(key, array) {
@@ -46,7 +49,6 @@ function findUnique(key, array) {
     }, result)
 
     return Object.values(result);
-
 }
 
 const largestIndex = (a, b, array) => array.indexOf(a) > array.indexOf(b) ? a : b;

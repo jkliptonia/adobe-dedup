@@ -7,6 +7,7 @@ const lateDate = new Date(2019, 3, 15, 10, 30);
 
 describe('date functions', () => {
     it('should return true is first date is later of two', () => {
+        
         const laterDate = { entryDate : lateDate };
         const earlierDate = { entryDate : earlyDate };
         
@@ -14,6 +15,7 @@ describe('date functions', () => {
     });
 
     it('should return true is the two dates are equal', () => {
+
         const dateOne = { entryDate : lateDate };
         const dateTwo = { entryDate : lateDate };
         
@@ -21,6 +23,7 @@ describe('date functions', () => {
     });
 
     it('should return the value of an array that is higher index', () => {
+
         const array = [ 1, 2, 3, 4, 5];
         const lowerIndex = array[2];
         const higherIndex = array[4];
@@ -31,6 +34,7 @@ describe('date functions', () => {
 
 describe('compare function', () => {
     it('should return object later in array if the two contain equal dates', () => {
+
         const array = [ { 
                 name: "first object",
                 entryDate : lateDate
@@ -45,6 +49,7 @@ describe('compare function', () => {
     });
 
     it('should return the first object if it has the later date ', () => {
+
         const array = [ { 
             name: "first object",
             entryDate : lateDate
@@ -59,6 +64,7 @@ describe('compare function', () => {
     });
 
     it('should return the second object if it has the later date ', () => {
+
         const array = [{ 
             name: "first object",
             entryDate : earlyDate
