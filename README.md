@@ -33,6 +33,6 @@ The application should also provide a log of changes including some representati
 
 ## To Run Tests
 
-1.``npm run test`` will run the entire test suite.
+1. ``npm run test`` will run the entire test suite.
 2. ``npm run test-script`` will run tests checking the functionality of the whole de-duplicator script.
 3. ``npm run test-functions`` will run tests on the smaller functions of the script.
