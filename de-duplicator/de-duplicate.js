@@ -1,51 +1,50 @@
 import { logger, logChange } from "./logger";
 
-//TODO: update README
-//TODO: add O(n) record
-//TODO: stretch goal, implement command line functionality
-
 function deduplicate(array) {
 
-    let { unique: uniqueEmails, changeFile: changedEmails } = findUnique('email', array);
-    let { unique: uniqueIds, changeFile: changedIds } = findUnique('_id', uniqueEmails);
+    //copy of array, maintaining original index for identitcal data
+    const indexedArray = array.slice();
+
+    //find all unique emails
+    let { unique: uniqueEmails, changeFile: changedEmails } = findUnique('email', array, indexedArray);
+    //compare to unique ids
+    let { unique: uniqueIds, changeFile: changedIds } = findUnique('_id', uniqueEmails, indexedArray);
 
     const changeFile = [ ...changedEmails, ...changedIds ];
     const deduplicated = uniqueIds;
 
+    //create log and notify user
     logger(array, changeFile, deduplicated);
     return deduplicated;
 }
 
-function compareDups(a, b, array) {
-
-    //a is current
-    //b is proposed change
+function compareDups(curr, dup, array) {
 
     switch(true) {
-        case datesAreEqual(a,b):
-            return largestIndex(a, b, array);
-        case firstDateIsLater(a, b):
-            return a;
-        case firstDateIsLater(b, a):
-            return b;
+        case datesAreEqual(curr, dup):
+            return largestIndex(curr, dup, array);
+        case firstDateIsLater(curr, dup):
+            return curr;
+        case firstDateIsLater(dup, curr):
+            return dup;
         default:
             throw new Error("Unable to succesfully compare duplicates");
     }
 }
 
-function findUnique(key, array) {
+function findUnique(key, array, indexedArray) {
 
     let result = {};
-    let changeFile = []
+    let changeFile = [];
 
-    array.reduce( (acc, curr, _, arr) => {
+    array.reduce( (acc, curr) => {
 
         let uniqueData;
         const keyField = curr[key];
         const existing = acc[keyField];
 
         if (existing){
-            uniqueData = compareDups(existing, curr, arr);
+            uniqueData = compareDups(existing, curr, indexedArray);
             logChange(changeFile, existing, uniqueData)
         } else {
             uniqueData = curr;

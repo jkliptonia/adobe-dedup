@@ -1,5 +1,6 @@
 const { assert, expect } = require('chai');
 const { compareDups, largestIndex, datesAreEqual, firstDateIsLater, findUnique } = require('../de-duplicate'); 
+const { logger, logChange, prettify } = require('../logger');
 
 //test dates
 const earlyDate = new Date(2019, 2, 11, 11, 30);
@@ -77,6 +78,12 @@ describe('compare function', () => {
 
         assert.equal(compareDups(firstObject, secondObject, array), secondObject);
     });
+
+    it('should throw error when unable to compare arguments', () => {
+
+        assert.throws(()=> compareDups(5, 4, []), "Unable to succesfully compare duplicates");  
+    });
+
 });
 
 describe('findUnique function', () => {
@@ -96,11 +103,52 @@ describe('findUnique function', () => {
     }]
 
     it('should find unique key fields', () => {
-        const uniqueEmails = findUnique('email', array);
-        const uniqueIds = findUnique('_id', array);
+        const { unique: uniqueEmails } = findUnique('email', array);
+        const { unique: uniqueIds} = findUnique('_id', array);
 
         expect(uniqueEmails.length).to.eq(2);
         expect(uniqueIds.length).to.eq(3);
+    });
+
+});
+
+describe('logger function', () => {
+
+    const from = {
+        _id: "ABC",
+        email: "friend@place.com",
+        entryDate: earlyDate
+    };
+
+    const to = {
+        _id: "CDE",
+        email: "friend@place.com",
+        entryDate: lateDate
+    };
+
+    const expectedChangeFile = {
+        "from" : from,
+        "to" : to
+    };
+
+    it('should write changes to array', () => {
+
+        const result = logChange([], from, to);
+        assert.deepEqual(result[0], expectedChangeFile);
+
+    });
+
+    it('should return correctly formatted log with source, changes, and output', () => {
+
+        const source = [ from, to ];
+        const output = to;
+        
+        const result = logger(source, expectedChangeFile, output);
+
+        expect(result).to.include(prettify(source));
+        expect(result).to.include(prettify(expectedChangeFile));
+        expect(result).to.include(prettify(output));
+
     });
 
 });
